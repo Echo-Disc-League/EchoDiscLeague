@@ -1,0 +1,143 @@
+body
+{
+    background-color: rgb(20, 20, 20);
+    color: white;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+
+    font-family: "Ubuntu";
+}
+
+.central-content
+{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+    height: auto;
+    padding: 20px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.rankings-panel, .info-board
+{
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    border: 3px white solid;
+    padding: 20px 30px;
+    flex: 1;
+    min-width: 0;
+}
+
+#rank-header, #discLeagueHeader {
+    text-align: center;
+    font-family: "BBH Bartle";
+}
+#rank-header
+{
+    padding-bottom: 20px;
+}
+
+/* Info board styles */
+#infoBoardMessage {
+    white-space: pre-line;
+}
+
+#infoBoardImage {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    border-radius: 8px;
+    margin: 15px 0;
+}
+
+/* Rankings styles */
+#rankingsList div {
+    height: 2px;
+    background-color: rgba(255, 255, 255, 0.2);
+    width: 100%;
+    margin: 10px 0;
+}
+
+.teamLinkButton a, #rank-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Pushes logo to the right */
+    text-decoration: none;
+    color: white;
+    transition: color 0.3s ease;
+}
+
+.teamLinkButton a:hover, #rank-header:hover {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.logo-container {
+    display: inline-flex;
+    margin-left: auto; /* Ensures it stays on the right */
+}
+
+.team-logo {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    margin-left: 10px;
+    margin-right: 15px; /* Moves it left from the edge */
+    vertical-align: middle;
+}
+
+/* Responsive text sizing */
+h1 {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+}
+
+h2 {
+    font-size: clamp(1rem, 3vw, 1.5rem);
+}
+
+p {
+    font-size: clamp(0.9rem, 2vw, 1rem);
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    .central-content {
+        flex-direction: column;
+        gap: 15px;
+        padding: 10px;
+    }
+    
+    .rankings-panel, .info-board {
+        padding: 15px 20px;
+    }
+    
+    body {
+        padding: 10px;
+    }
+}
+
+/* Very small screens */
+@media (max-width: 480px) {
+    .rankings-panel, .info-board {
+        padding: 15px;
+        border-width: 2px;
+    }
+    
+    .central-content {
+        padding: 5px;
+    }
+    
+    .team-logo {
+        width: 25px;
+        height: 25px;
+    }
+}
+
+a
+{
+    color: inherit;
+    text-decoration: none;
+}
