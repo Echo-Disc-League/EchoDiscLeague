@@ -19,7 +19,6 @@ const storage = getStorage(app);
 
 const quickRankingsTeamAmount = 10;
 
-// Fetch info board message
 const messageRef = ref(database, 'messages/infoBoardMessage');
 get(messageRef)
     .then((snapshot) => {
@@ -36,7 +35,6 @@ get(messageRef)
         document.getElementById('infoBoardMessage').textContent = "Error loading message";
     });
 
-// Fetch and display info board image
 const infoBoardImageRef = ref(database, 'messages/infoBoardImage');
 get(infoBoardImageRef)
     .then((snapshot) => {
@@ -78,7 +76,6 @@ get(teamsRef)
             teamsArray.sort((a, b) => b.mmr - a.mmr);
             const topTeams = teamsArray.slice(0, quickRankingsTeamAmount);
             
-            // Build HTML with logo container on the right
             let rankingsHTML = '';
             
             topTeams.forEach((team, index) => {
@@ -96,7 +93,6 @@ get(teamsRef)
             
             document.getElementById('rankingsList').innerHTML = rankingsHTML;
             
-            // Function to load placeholder
             const loadPlaceholder = (teamId, teamName) => {
                 const placeholderRef = storageRef(storage, 'team-logos/Placeholder.png');
                 getDownloadURL(placeholderRef)
@@ -115,7 +111,6 @@ get(teamsRef)
                     });
             };
             
-            // Load logos with fallback to placeholder
             topTeams.forEach((team) => {
                 if (team.logo) {
                     const logoRef = storageRef(storage, team.logo);
@@ -135,7 +130,6 @@ get(teamsRef)
                             loadPlaceholder(team.id, team.name);
                         });
                 } else {
-                    // No logo specified, use placeholder
                     loadPlaceholder(team.id, team.name);
                 }
             });
@@ -148,6 +142,5 @@ get(teamsRef)
         console.error("Error fetching teams:", error);
         document.getElementById('rankingsList').textContent = "Error loading rankings";
     });
-
 
 console.log("Firebase loaded");
