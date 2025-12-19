@@ -87,7 +87,7 @@ get(teamsRef)
                 }
                 
                 rankingsHTML += `<h2 class="teamLinkButton" data-team-id="${team.id}">
-                    <a href="./html/teamPage.html/${team.id}">
+                    <a href="./html/teamPage.html?team=${team.id}">
                         ${index + 1}. ${team.name} - ${team.mmr}
                         <span class="logo-container" id="logo-container-${team.id}"></span>
                     </a>
