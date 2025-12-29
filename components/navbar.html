@@ -1,0 +1,105 @@
+<!-- navbar.html - Save this in /components/navbar.html -->
+<nav class="top-navbar">
+    <div class="navbar-container">
+        <div class="navbar-logo">
+            <a href="/index.html">Echo Disc League</a>
+        </div>
+        <div class="navbar-links">
+            <a href="/index.html">Home</a>
+            <a href="/html/rankingsPage.html">Rankings</a>
+            <a href="/html/membersList.html">Members</a>
+            <a href="/html/accountPage.html">Account</a>
+        </div>
+    </div>
+</nav>
+
+<style>
+.top-navbar {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-bottom: 3px solid white;
+    padding: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+}
+
+/* Add padding to body to prevent content from hiding under navbar */
+body {
+    padding-top: 70px !important;
+}
+
+.navbar-container {
+    max-width: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+}
+
+.navbar-logo a {
+    font-family: "BBH Bartle", Arial, sans-serif;
+    font-size: 1.5rem;
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.navbar-logo a:hover {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.navbar-links {
+    display: flex;
+    gap: 30px;
+}
+
+.navbar-links a {
+    color: white;
+    text-decoration: none;
+    font-family: "Ubuntu", Arial, sans-serif;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+    padding: 8px 15px;
+    border-radius: 5px;
+}
+
+.navbar-links a:hover {
+    color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    body {
+        padding-top: 150px !important;
+    }
+    
+    .navbar-container {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px 20px;
+    }
+    
+    .navbar-logo {
+        text-align: center;
+        width: 100%;
+    }
+    
+    .navbar-links {
+        gap: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+    }
+    
+    .navbar-links a {
+        font-size: 0.9rem;
+        padding: 6px 12px;
+    }
+}
+</style>

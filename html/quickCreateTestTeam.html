@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Test Team - Echo Disc League</title>
+    <style>
+        body {
+            background-color: rgb(20, 20, 20);
+            color: white;
+            margin: 0;
+            padding: 20px;
+            font-family: 'Ubuntu', Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        .container {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            border: 3px white solid;
+            padding: 30px;
+            max-width: 500px;
+            width: 100%;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        
+        input {
+            width: 100%;
+            height: 40px;
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 2px white solid;
+            color: white;
+            padding: 0 15px;
+            font-family: 'Ubuntu', Arial, sans-serif;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.8);
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+        
+        .info-text {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 5px;
+        }
+        
+        .preview {
+            background-color: rgba(100, 100, 255, 0.2);
+            border: 2px dashed rgba(100, 100, 255, 0.5);
+            border-radius: 8px;
+            padding: 10px;
+            margin-top: 10px;
+            font-family: monospace;
+        }
+        
+        button {
+            width: 100%;
+            height: 50px;
+            border-radius: 10px;
+            background-color: rgba(100, 200, 100, 0.3);
+            border: 3px solid rgb(100, 200, 100);
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        
+        button:hover {
+            background-color: rgba(100, 200, 100, 0.5);
+            transform: scale(1.02);
+        }
+        
+        button:active {
+            transform: scale(0.98);
+        }
+        
+        .status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            display: none;
+        }
+        
+        .status.success {
+            background-color: rgba(100, 200, 100, 0.2);
+            border: 2px solid rgb(100, 200, 100);
+            display: block;
+        }
+        
+        .status.error {
+            background-color: rgba(200, 100, 100, 0.2);
+            border: 2px solid rgb(200, 100, 100);
+            display: block;
+        }
+        
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+        }
+        
+        .back-link:hover {
+            color: white;
+        }
+    </style>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=BBH+Bartle&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+    <script src="/javaScript/navbarLoader.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Create Test Team</h1>
+        
+        <div class="form-group">
+            <label for="teamName">Team Name</label>
+            <input type="text" id="teamName" placeholder="Enter team name">
+            <div class="info-text">This will be the display name of the team</div>
+            <div class="preview">Team ID: <span id="teamIdPreview">team_id_will_appear_here</span></div>
+        </div>
+        
+        <div class="form-group">
+            <label for="teamMMR">Team MMR</label>
+            <input type="number" id="teamMMR" value="500" min="0">
+            <div class="info-text">Default: 500</div>
+        </div>
+        
+        <button onclick="createTeam()">Create Team</button>
+        
+        <div id="status" class="status"></div>
+        
+        <a href="../index.html" class="back-link">← Back to Home</a>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCoi0Fmm2JOZyy1U-q6Ajv26a4kOBraEHE",
+            authDomain: "echodiscleague.firebaseapp.com",
+            databaseURL: "https://echodiscleague-default-rtdb.firebaseio.com",
+            projectId: "echodiscleague",
+            storageBucket: "echodiscleague.firebasestorage.app",
+            messagingSenderId: "180497385590",
+            appId: "1:180497385590:web:531e47f2b8f3bdc517b757",
+            measurementId: "G-0CPN0KBDM7"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        // Update team ID preview when team name changes
+        document.getElementById('teamName').addEventListener('input', function(e) {
+            const teamName = e.target.value;
+            const teamId = teamName.toLowerCase().replace(/\s+/g, '_');
+            document.getElementById('teamIdPreview').textContent = teamId || 'team_id_will_appear_here';
+        });
+
+        // Make createTeam function global
+        window.createTeam = async function() {
+            const teamName = document.getElementById('teamName').value.trim();
+            const teamMMR = parseInt(document.getElementById('teamMMR').value);
+            const statusDiv = document.getElementById('status');
+
+            // Validation
+            if (!teamName) {
+                statusDiv.className = 'status error';
+                statusDiv.textContent = 'Please enter a team name';
+                return;
+            }
+
+            if (isNaN(teamMMR) || teamMMR < 0) {
+                statusDiv.className = 'status error';
+                statusDiv.textContent = 'Please enter a valid MMR (0 or greater)';
+                return;
+            }
+
+            // Generate team ID
+            const teamId = teamName.toLowerCase().replace(/\s+/g, '_');
+
+            // Create team object
+            const teamData = {
+                name: teamName,
+                mmr: teamMMR
+            };
+
+            try {
+                // Write to Firebase
+                await set(ref(database, `teams/${teamId}`), teamData);
+                
+                statusDiv.className = 'status success';
+                statusDiv.textContent = `✓ Team "${teamName}" created successfully with ID: ${teamId}`;
+                
+                // Clear form
+                document.getElementById('teamName').value = '';
+                document.getElementById('teamMMR').value = '500';
+                document.getElementById('teamIdPreview').textContent = 'team_id_will_appear_here';
+                
+            } catch (error) {
+                console.error("Error creating team:", error);
+                statusDiv.className = 'status error';
+                statusDiv.textContent = `Error: ${error.message}`;
+            }
+        };
+    </script>
+</body>
+</html>

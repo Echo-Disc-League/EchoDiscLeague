@@ -8,12 +8,6 @@ body
     font-family: "Ubuntu";
 }
 
-.website-nav
-{
-    background-color: aliceblue;
-    width: 100%;
-}
-
 .central-content
 {
     display: flex;
@@ -27,7 +21,7 @@ body
     box-sizing: border-box;
 }
 
-.rankings-panel, .info-board
+.rankings-panel
 {
     background-color: rgba(255, 255, 255, 0.1);
     border-radius: 10px;
@@ -35,10 +29,9 @@ body
     padding: 20px 30px;
     flex: 1;
     min-width: 0;
-    text-align: center;
 }
 
-#rank-header, #discLeagueHeader {
+#rank-header{
     text-align: center;
     font-family: "BBH Bartle";
 }
@@ -46,20 +39,6 @@ body
 #rank-header
 {
     padding-bottom: 20px;
-}
-
-/* Info board styles */
-#infoBoardMessage {
-    white-space: pre-line;
-}
-
-#infoBoardImage {
-    display: block;
-    width: 100%;
-    max-width: 500px;
-    height: auto;
-    border-radius: 8px;
-    margin: 15px auto; /* Changed to center horizontally */
 }
 
 /* Rankings styles */
@@ -95,6 +74,19 @@ body
     margin-left: 10px;
     margin-right: 15px;
     vertical-align: middle;
+}
+
+#search-bar
+{
+    width: 100%;
+    height: 40px;
+    border-radius: 20px;
+    background-color: transparent;
+    text-align: center;
+    color: inherit;
+    font-family: "Ubuntu";
+    border: 3px white solid;
+    margin-bottom: 30px;
 }
 
 /* Responsive text sizing */
